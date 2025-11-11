@@ -8,30 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = BatteryViewModel()
+    @Environment(\.managedObjectContext) private var context
+    @StateObject private var viewModel: BatteryViewModel
+
+    init() {
+        _viewModel = StateObject(wrappedValue: BatteryViewModel())
+    }
 
     var body: some View {
-        VStack(spacing: 15) {
-            if let info = viewModel.batteryInfo {
-                Text("🔋 Battery Status")
-                    .font(.title2)
-                    .bold()
-                    .padding(.bottom, 10)
+        TabView {
+            VStack(spacing: 15) {
+                if let info = viewModel.batteryInfo {
+                    Text("🔋 Battery Status")
+                        .font(.title2)
+                        .bold()
+                        .padding(.bottom, 10)
 
-                Text("Current Charge: \(info.percentage)%")
-                Text(String(format: "Health: %.1f%%", info.healthPercentage ?? "0%"))
-                Text("Cycle Count: \(info.cycleCount ?? 0)")
-                Text(String(format: "Temperature: %.1f°C", info.temperatureC ?? "0"))
-                Text(String(format: "Voltage: %.2f V", info.voltageV ?? "0"))
-                Text(info.isCharging ? "⚡ Charging" : "🔌 On Battery")
-                    .fontWeight(.semibold)
-                    .foregroundColor(info.isCharging ? .green : .orange)
-            } else {
-                ProgressView("Fetching Battery Info…")
+                    Text("Current Charge: \(info.percentage)%")
+                    Text(String(format: "Health: %.1f%%", info.healthPercentage ?? "0%"))
+                    Text("Cycle Count: \(info.cycleCount ?? 0)")
+                    Text(String(format: "Temperature: %.1f°C", info.temperatureC ?? "0"))
+                    Text(String(format: "Voltage: %.2f V", info.voltageV ?? "0"))
+                    Text(info.isCharging ? "⚡ Charging" : "🔌 On Battery")
+                        .fontWeight(.semibold)
+                        .foregroundColor(info.isCharging ? .green : .orange)
+                } else {
+                    ProgressView("Fetching Battery Info…")
+                }
             }
+            .frame(width: 320, height: 260)
+            .padding()
+            .tabItem { Label("Dashboard", systemImage: "battery.100") }
+
+            HistoryView()
+                .tabItem { Label("History", systemImage: "chart.line.uptrend.xyaxis") }
         }
-        .frame(width: 320, height: 260)
-        .padding()
+        .frame(minWidth: 400, minHeight: 300)
     }
 }
 
