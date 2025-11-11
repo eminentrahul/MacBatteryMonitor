@@ -45,6 +45,9 @@ struct ContentView: View {
 
             HistoryView()
                 .tabItem { Label("History", systemImage: "chart.line.uptrend.xyaxis") }
+            
+            ChartsView()
+                    .tabItem { Label("Charts", systemImage: "chart.xyaxis.line") }
         }
         .frame(minWidth: 400, minHeight: 300)
     }
