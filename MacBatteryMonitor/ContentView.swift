@@ -48,6 +48,10 @@ struct ContentView: View {
             
             ChartsView()
                     .tabItem { Label("Charts", systemImage: "chart.xyaxis.line") }
+            
+            InsightsView()
+                    .tabItem { Label("Insight", systemImage: "lightbulb") }
+
         }
         .frame(minWidth: 400, minHeight: 300)
     }
