@@ -39,6 +39,9 @@ struct ContentView: View {
             .frame(width: 320, height: 260)
             .padding()
             .tabItem { Label("Dashboard", systemImage: "battery.100") }
+            
+            DashboardView(context: context)
+                .tabItem { Label("Dashboard V2", systemImage: "battery.100") }
 
             HistoryView()
                 .tabItem { Label("History", systemImage: "chart.line.uptrend.xyaxis") }
