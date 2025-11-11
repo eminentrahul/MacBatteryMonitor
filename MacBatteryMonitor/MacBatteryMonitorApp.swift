@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import IOKit.ps
 
 @main
 struct MacBatteryMonitorApp: App {
